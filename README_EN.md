@@ -1,3 +1,5 @@
+This is an automatic translation, may be incorrect in some places. See sources and examples!
+
 # GyverLBUF
 Line Buffer for Arduino
 - Stores and gives access to the last N records
