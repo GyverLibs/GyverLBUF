@@ -1,103 +1,118 @@
 This is an automatic translation, may be incorrect in some places. See sources and examples!
 
-# GyverLBUF
-Line Buffer for Arduino
-- Stores and gives access to the last N records
-- Can be used for:
-    - Approximations from the last N measurements
-    - Find the difference between the current and the last in the buffer
+# Gyverlbuf
+Linear buffer for Arduino
+- Keeps and gives access to the latter n records
+- can be used for:
+    - approximation according to the latter n measurements
+    - search for the difference between the current and the last in the buffer
 - Static size
-- Data type selection
+- Type of data type
 
-### Compatibility
-Compatible with all Arduino platforms (using Arduino functions)
+## compatibility
+Compatible with all arduino platforms (used arduino functions)
 
 ## Content
-- [Install](#install)
-- [Initialization](#init)
-- [Usage](#usage)
-- [Example](#example)
-- [Versions](#versions)
-- [Bugs and feedback](#feedback)
+- [installation] (# Install)
+- [initialization] (#init)
+- [use] (#usage)
+- [Example] (# Example)
+- [versions] (#varsions)
+- [bugs and feedback] (#fedback)
 
-<a id="install"></a>
+<a id="install"> </a>
 ## Installation
-- The library can be found by the name **GyverLBUF** and installed via the library manager in:
-    - Arduino IDE
-    - Arduino IDE v2
-    - PlatformIO
-- [Download library](https://github.com/GyverLibs/GyverLBUF/archive/refs/heads/main.zip) .zip archive for manual installation:
-    - Unzip and put in *C:\Program Files (x86)\Arduino\libraries* (Windows x64)
-    - Unzip and put in *C:\Program Files\Arduino\libraries* (Windows x32)
-    - Unpack and put in *Documents/Arduino/libraries/*
-    - (Arduino IDE) automatic installation from .zip: *Sketch/Include library/Add .ZIP library…* and specify the downloaded archive
-- Read more detailed instructions for installing libraries [here] (https://alexgyver.ru/arduino-first/#%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE% D0%B2%D0%BA%D0%B0_%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA)
+- The library can be found by the name ** gyverlbuf ** and installed through the library manager in:
+    - Arduino ide
+    - Arduino ide v2
+    - Platformio
+- [download the library] (https://github.com/gyverlibs/gyverlbuf/archive/refs/heads/main.zip) .Zip archive for manual installation:
+    - unpack and put in * C: \ Program Files (X86) \ Arduino \ Libraries * (Windows X64)
+    - unpack and put in * C: \ Program Files \ Arduino \ Libraries * (Windows X32)
+    - unpack and put in *documents/arduino/libraries/ *
+    - (Arduino id) Automatic installation from. Zip: * sketch/connect the library/add .Zip library ... * and specify downloaded archive
+- Read more detailed instructions for installing libraries [here] (https://alexgyver.ru/arduino-first/#%D0%A3%D1%81%D1%82%D0%B0%BD%D0%BE%BE%BE%BED0%B2%D0%BA%D0%B0_%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA)
+### Update
+- I recommend always updating the library: errors and bugs are corrected in the new versions, as well as optimization and new features are added
+- through the IDE library manager: find the library how to install and click "update"
+- Manually: ** remove the folder with the old version **, and then put a new one in its place.“Replacement” cannot be done: sometimes in new versions, files that remain when replacing are deleted and can lead to errors!
 
-<a id="init"></a>
-## Initialization
-```cpp
-GyverLBUF<data type, buffer size> buf;
-// data type: any. byte/int/float...
-// buffer size: code runs faster when the buffer size is a multiple of a power of two (2, 4, 8, 16, 32...)
-```
 
-<a id="usage"></a>
+<a id="init"> </a>
+## initialization
+`` `CPP
+Gyverlbuf <data type, buffer size> buf;
+// Type of data: any.byte/int/float ...
+// buffer size: the code is executed faster with the size of the buffer, a multiple of the degree of deuces (2, 4, 8, 16, 32 ...)
+`` `
+
+<a id="usage"> </a>
 ## Usage
-```cpp
-// TYPE - data type specified during initialization
-void write(TYPE newVal); // add to buffer
-void write(int num, TYPE val); // write to the buffer at number num
-TYPE read(int num); // read from buffer
-intsize(); // buffer size
-```
+`` `CPP
+// type - specified in the initialization of the data type
+VOID Write (Type NewVal);// Add to the buffer
+VOID Write (Int Num, Type Val);// entry in the buffer by num number
+Type Read (int num);// Reading from the buffer
+int size ();// buffer size
+`` `
 
-<a id="example"></a>
+<a id="EXAMPLE"> </a>
 ## Example
-See **examples** for other examples!
-```cpp
-#include <GyverLBUF.h>
-GyverLBUF<int, 8> buf;
-// data type: any. byte/int/float...
-// buffer size: code runs faster when
-// buffer size, power of two (2, 4, 8, 16, 32...)
+The rest of the examples look at ** Examples **!
+`` `CPP
+#include <gyverlbuf.h>
+Gyverlbuf <int, 8> buf;
+// Type of data: any.byte/int/float ...
+// buffer size: the code is executed faster at
+// the size of the buffer, a multiple of the degree of deuces (2, 4, 8, 16, 32 ...)
 
-void setup() {
-  Serial.begin(9600);
+VOID setup () {
+  Serial.Begin (9600);
 
-  for (int i = 0; i < 12; i++) {
-    buf.write(i);
-    for (int j = 0; j < 8; j++) {
-      Serial.print(buf.read(j));
-      Serial print(',');
+  for (int i = 0; i <12; i ++) {
+    buf.write (i);
+    for (int j = 0; j <8; j ++) {
+      Serial.print (buf.read (j));
+      Serial.print (',');
     }
-    Serial.println();
+    Serial.println ();
   }
 
   /*
-    0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,1,
-    0,0,0,0,0,0,1,2,
-    0,0,0,0,0,1,2,3,
-    0,0,0,0,1,2,3,4,
-    0,0,0,1,2,3,4,5,
-    0.0.1.2.3.4.5.6
-    0,1,2,3,4,5,6,7,
-    1,2,3,4,5,6,7,8,
-    2,3,4,5,6,7,8,9,
-    3,4,5,6,7,8,9,10,
+    0.0.0.0.0.0.0.0,
+    0.0,0,0,0,0,0,1,
+    0.0,0,0,0,0,1,2,
+    0.0,0,0,0,1,2,3,
+    0.0,0,0,1,2,3,4,
+    0.0,0,1,2,3,4,5,
+    0.0.1,2,3,4,5,6,
+    0.1,2,3,4,5,6,7,
+    1.2,3,4,5,6,7,8,
+    2.3,4,5,6,7,8,9,
+    3.4,5,6,7,8,9,10,
     4,5,6,7,8,9,10,11,
   */
 }
 
-void loop() {
+VOID loop () {
 }
-```
+`` `
 
-<a id="versions"></a>
-## Versions
-- v1.0
+<a ID= "Versions"> </a>
+## versions
+- V1.0
 
-<a id="feedback"></a>
-## Bugs and feedback
-When you find bugs, create an **Issue**, or better, immediately write to the mail [alex@alexgyver.ru](mailto:alex@alexgyver.ru)
-The library is open for revision and your **Pull Request**'s!
+<a id="feedback"> </a>
+## bugs and feedback
+Create ** Issue ** when you find the bugs, and better immediately write to the mail [alex@alexgyver.ru] (mailto: alex@alexgyver.ru)
+The library is open for refinement and your ** pull Request ** 'ow!
+
+
+When reporting about bugs or incorrect work of the library, it is necessary to indicate:
+- The version of the library
+- What is MK used
+- SDK version (for ESP)
+- version of Arduino ide
+- whether the built -in examples work correctly, in which the functions and designs are used, leading to a bug in your code
+- what code has been loaded, what work was expected from it and how it works in reality
+- Ideally, attach the minimum code in which the bug is observed.Not a canvas of a thousand lines, but a minimum code
