@@ -1,51 +1,47 @@
-/*
-    Линейный буфер для Arduino
-    Документация: 
-    GitHub: https://github.com/GyverLibs/GyverLBUF
-    Возможности:
-    - Хранит и даёт доступ к последним N записям
-    - Может использоваться для:
-        - Аппроксимации по последним N измерениям
-        - Поиска разности между текущим и последним в буфере
-    - Статический размер
-    - Выбор типа данных
-    
-    AlexGyver, alex@alexgyver.ru
-    https://alexgyver.ru/
-    MIT License
+#pragma once
+#include <inttypes.h>
+#include <stddef.h>
 
-    Версии:
-    v1.0 - релиз
-*/
-
-#ifndef _GyverLBUF_h
-#define _GyverLBUF_h
-template < typename TYPE, int SIZE >
+template <typename T, size_t SIZE, typename Ti = uint16_t>
 class GyverLBUF {
-public:
+   public:
     // добавить в буфер
-    void write(TYPE val) {
-        buffer[count % SIZE] = val;
-        if (++count >= SIZE) count = 0;
+    void write(T val) {
+        buffer[head] = val;
+        head = (head + 1 >= SIZE) ? 0 : (head + 1);
     }
-    
+
     // запись в буфер по номеру
-    void write(int num, TYPE val) {
-        buffer[(num + count) % SIZE] = val;
+    void write(size_t n, T val) {
+        get(n) = val;
     }
-    
+
     // чтение из буфера
-    TYPE read(int num) {
-        return buffer[(num + count) % SIZE];
+    T read(size_t n) {
+        return buffer[_i(n)];
     }
-    
+
+    // чтение из буфера
+    T& get(size_t n) {
+        return buffer[_i(n)];
+    }
+
+    // чтение из буфера
+    T& operator[](size_t n) {
+        return get(n);
+    }
+
     // размер буфера
-    int size() {
+    size_t size() {
         return SIZE;
     }
 
-private: 
-    TYPE buffer[SIZE];
-    int count = 0;
+   private:
+    T buffer[SIZE] = {};
+    Ti head = 0;
+
+    inline size_t _i(size_t num) {
+        size_t i = num + head;
+        return i >= SIZE ? i - SIZE : i;
+    }
 };
-#endif
