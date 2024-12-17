@@ -6,6 +6,9 @@
 
 [![Foo](https://img.shields.io/badge/ПОДПИСАТЬСЯ-НА%20ОБНОВЛЕНИЯ-brightgreen.svg?style=social&logo=telegram&color=blue)](https://t.me/GyverLibs)
 
+|⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️<br><br>**БИБЛИОТЕКА АРХИВИРОВАНА И СТАЛА ЧАСТЬЮ БИБЛИОТЕКИ [GTL](https://github.com/GyverLibs/GTL)**<br><br>⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️|
+| --- |
+
 # GyverLBUF
 Линейный буфер для Arduino
 - Хранит и даёт доступ к последним N записям
